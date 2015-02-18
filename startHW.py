@@ -5,7 +5,7 @@ import sys, os
 import datetime as dt, string
 import ConfigParser
 
-DATA_LOC = "resources"
+DATA_DIR = "resources"
 INFO_FNAME = "profile.cfg"
 INFO_TITLE = "Student-Specific Information"
 INFO_FIELDS = {
@@ -42,16 +42,20 @@ def rawInputWithCheck(prompt):
     return i
 
 def initProfile():
+    """
+    Completes first-time setup of %s by taking user input.
+    """ % os.path.join(DATA_DIR, INFO_FNAME)
     profile = ConfigParser.RawConfigParser()
     profile.add_section(INFO_TITLE)
     for field in INFO_FIELDS:
         profile.set(INFO_TITLE, field, rawInputWithCheck("Enter %s --> " % field))
-    with open(os.path.join(DATA_LOC, INFO_FNAME), 'w') as F:
+    with open(os.path.join(DATA_DIR, INFO_FNAME), 'w') as F:
         profile.write(F)
 
 def readProfile():
+    """Reads existing user info from %s""" os.path.join(DATA_DIR, INFO_FNAME)
     profile = ConfigParser.RawConfigParser()
-    profile.read(os.path.join(DATA_LOC, INFO_FNAME))
+    profile.read(os.path.join(DATA_DIR, INFO_FNAME))
     return tuple([profile.get(field, INFO_FIELDS[field]) for field in INFO_FIELDS])
 
 def main(argc, argv):

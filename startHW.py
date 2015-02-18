@@ -49,6 +49,9 @@ def rawInputWithCheck(prompt):
 ############################# Manage User Profile #############################
 
 def initProfile():
+    """
+    Completes first-time setup of %s by taking user input.
+    """ % os.path.join(DATA_DIR, INFO_FNAME)
     print "First time setup! You will only have to do this once."
     P = ConfigParser.RawConfigParser() # profile is a long word
     P.optionxform = str # preserve case in options
@@ -59,11 +62,11 @@ def initProfile():
         P.write(F)
 
 def readProfile():
+    """Reads existing user info from %s""" os.path.join(DATA_DIR, INFO_FNAME)
     P = ConfigParser.RawConfigParser() # profile is a long word
     P.optionxform = str # preserve case in options
     P.read(os.path.join(DATA_DIR, INFO_FNAME))
     return dict(P.items(INFO_TITLE))
-    # return [P.get(INFO_TITLE, field) for field in INFO_FIELDS.keys()]
 
 ################################ Main Routine #################################
 

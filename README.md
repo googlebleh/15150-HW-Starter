@@ -20,6 +20,8 @@ for work and span of a function, left and right grouping symbols, and a symbol
 for the set of natural numbers.
 
 Syntax for both \work and \span are as follows
+
     \work{function_name}{parameters}
     \funspan{function_name}{parameters}
+
 Note that you must be in math mode to use either command (for subscripting).

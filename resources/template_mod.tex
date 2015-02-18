@@ -15,19 +15,19 @@
 \hrule \vspace{.10in}}
 \renewcommand{\part}[1] {\vspace{.10in} {\bf (#1)}}
 
-\newcommand{\myname}{{studentName}}
-\newcommand{\myandrew}{{andrewID}@andrew.cmu.edu}
-\newcommand{\mysection}{Section {labSection}}
-\newcommand{\myhwnum}{{homeworkNumber}}
+\newcommand{\myname}{studentName}
+\newcommand{\myandrew}{andrewID@andrew.cmu.edu}
+\newcommand{\mysection}{Section labSection}
+\newcommand{\myhwnum}{homeworkNumber}
 
 % Some useful commands
 \newcommand{\tab}{\hspace*{6.35mm}} % original was 2em
 \newcommand{\nat}{\mathbb{N}}
 \newcommand{\lp}{\left(}
 \newcommand{\rp}{\right)}
-
+\newcommand{\code}[1] {\texttt{#1}}
 \newcommand{\work}[2] {W_{\texttt{#1}} \lp #2 \rp}
-\newcommand{\funspan}[2] {S_{\texttt{#1}} \lp #2 \rp}
+\newcommand{\funspan}[2] {S_{\texttt{#1}} \lp #2 \rp} % \span is already taken
 
 % document setup
 \setlength{\parindent}{0pt}
@@ -50,7 +50,7 @@
 \myname \\
 \myandrew \\
 \mysection \\
-{currentDate} \\
+currentDate \\
 \end{center}
 
 \question{1}{Mathematical Symbols}

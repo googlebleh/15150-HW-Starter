@@ -17,6 +17,9 @@ INFO_FIELDS = {
     "Lab Section" : "labSection"
 }
 
+INFO_RELPATH = os.path.join(DATA_DIR, INFO_FNAME)
+TEMPLATE_RELPATH = os.path.join(DATA_DIR, TEMPLATE_FNAME)
+
 ################################## Utilities ##################################
 
 def formalDateToday():
@@ -49,23 +52,21 @@ def rawInputWithCheck(prompt):
 ############################# Manage User Profile #############################
 
 def initProfile():
-    """
-    Completes first-time setup of %s by taking user input.
-    """ % os.path.join(DATA_DIR, INFO_FNAME)
+    """Completes first-time setup of %s by taking user input.""" % INFO_RELPATH
     print "First time setup! You will only have to do this once."
     P = ConfigParser.RawConfigParser() # profile is a long word
     P.optionxform = str # preserve case in options
     P.add_section(INFO_TITLE)
     for field in INFO_FIELDS.keys():
         P.set(INFO_TITLE, field, rawInputWithCheck("\nEnter %s --> " % field))
-    with open(os.path.join(DATA_DIR, INFO_FNAME), 'w') as F:
+    with open(INFO_RELPATH, 'w') as F:
         P.write(F)
 
 def readProfile():
-    """Reads existing user info from %s""" os.path.join(DATA_DIR, INFO_FNAME)
+    """Reads existing user info from %s""" % INFO_RELPATH
     P = ConfigParser.RawConfigParser() # profile is a long word
     P.optionxform = str # preserve case in options
-    P.read(os.path.join(DATA_DIR, INFO_FNAME))
+    P.read(INFO_RELPATH)
     return dict(P.items(INFO_TITLE))
 
 ################################ Main Routine #################################
@@ -79,22 +80,23 @@ def main(argc, argv):
     hwNum = int(argv[1])
     outfile = "hw%02d.tex" % hwNum
     
-    if not(os.access(os.path.join(DATA_DIR, TEMPLATE_FNAME), os.R_OK)):
+    if not(os.access(TEMPLATE_RELPATH, os.R_OK)):
         sys.exit("Error! Could not find my modded template at %s" %
-                 os.path.join(DATA_DIR, TEMPLATE_FNAME))
+                 TEMPLATE_RELPATH)
     elif (os.path.isfile(outfile) and
           not(YNInput("%s already exists. Overwrite? " % outfile))):  
         print "Exiting..."
         return 0
-    elif not(os.access(os.path.join(DATA_DIR, INFO_FNAME), os.R_OK)):
+    elif not(os.access(INFO_RELPATH, os.R_OK)):
         initProfile()
     
     profile = readProfile()
     
-    with open(os.path.join(DATA_DIR, TEMPLATE_FNAME), 'r') as T:
+    with open(TEMPLATE_RELPATH, 'r') as T:
         template = T.read()
         with open(outfile, 'w') as F:
-            # I apologize for these lines. Python's string
+            # I apologize for these lines
+            # Python's string formatting is all-or-nothing
             for field in INFO_FIELDS.keys():
                 template = template.replace(INFO_FIELDS[field], profile[field])
             template = template.replace("homeworkNumber", str(hwNum))
